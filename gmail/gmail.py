@@ -48,12 +48,11 @@ class Gmail():
 
         return self.imap
 
-
     def fetch_mailboxes(self):
         response, mailbox_list = self.imap.list()
         if response == 'OK':
             for mailbox in mailbox_list:
-                mailbox_name = str(mailbox).split('"/"')[-1].replace('"', '').strip()
+                mailbox_name = mailbox.split(b'"/"')[-1].replace(b'"', '').strip()
                 mailbox = Mailbox(self)
                 mailbox.external_name = mailbox_name
                 self.mailboxes[mailbox_name] = mailbox
